@@ -1,0 +1,17 @@
+__pycache__
+*.pyc
+*.db
+locale/*/LC_MESSAGES/django.mo
+*/locale/*/LC_MESSAGES/django.mo
+.sass-cache/
+.coverage
+.tox
+.idea
+apollo/Lib/site-packages
+apollo/__pycache__
+apollo4/__pycache__
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -1,0 +1,356 @@
+{%  extends "apollo4/index.html" %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/superVisedLearning.css' %}">
+
+{% if user.is_authenticated %}
+<!-- input section start -->
+<div class="row gap-20 mb-3 shadow rounded">
+    <div class="col-md-12">
+        <div id="learning-input-heading" class="col-md-12 col-sm-12 py-3 border-bottom d-flex ai-c jc-sb">
+            <h5 class="mb-0 text-uppercase">Input and analysis</h5>
+            <span class="arrow">
+        <i class="ti-angle-down"></i>
+      </span>
+        </div>
+    </div>
+    <div id="learning-input-body" class="row m-0 w-100">
+        <div class="col-md-12 col-sm-12 p-2 py-3 d-flex flex-nowrap">
+            <div class="row bd m-0">
+                <div class="bgc-white col-md-12 col-sm-12 py-3 border-bottom">
+                    <h5 class="mb-0 text-uppercase">Available Projects and Models</h5>
+                </div>
+                <div class="col-md-12">
+                    <div class="row my-2 bd bgc-white section-1">
+                        <div class="col-md-12 pl-1">
+                            <div class="files-upload-section">
+                                <div class=" mt-2 mb-3">
+                                    <label>Select an Existing Project:</label>
+                                    <select id="existingProjects" class="custom-select">
+                                        <option value="" selected>Choose...</option>
+                                    </select>
+                                    <p id="errorMessageProjectOption" class="errorColor">! Please select project Name</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pl-1">
+                            <div class="files-upload-section">
+                                <div class=" mt-2 mb-3">
+                                    <label>Selected Project's description:</label>
+                                    <textarea id="project-description" name="project-description" class="form-control" rows="5"
+                                              style="resize: none;" readonly></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pl-1">
+                            <div class="files-upload-section">
+                        <div class=" mt-2 mb-3">
+                            <label>Existing Model(s) for selected Project:</label>
+                            <select id="existingModels" class="custom-select">
+                                <option value="" selected>Choose...</option>
+                            </select>
+                            <p id="errorMessageModelOption" class="errorColor">! Please select model</p>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 p-2 w-100">
+                            <div class="bd bgc-white p-10  h-100">
+                                <div class="w-100 mb-10 border-bottom">
+                                    <h5 class="text-uppercase">
+                                        Training data
+                                    </h5>
+                                </div>
+                                <div class="w-100 mt-3">
+                                    <div class="row m-0 peers ai-sb flex-column flex-nowrap">
+                                        <div class="col-md-12 pl-0">
+                                            <div class="form-group mb-2">
+                                                <label for="training-examples"># Training Examples</label>
+                                                <input type="text" class="form-control" id="training-examples" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 pl-0">
+                                            <div class="form-group">
+                                                <label for="training-classes"># Classes</label>
+                                                <input type="text" class="form-control" id="training-classes" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 px-0 training-table-area">
+                                            <table id="training-data-table" class="table table-responsive training-data-table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Class</th>
+                                                    <th>#Examples</th>
+                                                    <th>Class %</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-2 w-100">
+                            <div class="bd bgc-white p-10 h-100">
+                                <div class="w-100 mb-10 border-bottom">
+                                    <h5 class="text-uppercase">
+                                        Model Performance
+                                    </h5>
+                                </div>
+                                <div class="w-100">
+                                    <div class="row m-0 peers ai-sb flex-column flex-nowrap w-100">
+                                        <div class="col-md-12 col-sm-12 pl-1 py-2">
+                                            <h5 class="my-0">5 fold Cross Validation Performance</h5>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 pl-0 d-md-flex d-sm-flex flex-md-column flex-sm-column w-100">
+                                            <table class="table table-borderless validations-table">
+                                            <tbody>
+                                            <tr>
+                                                <td>Average Accuracy</td>
+                                                <td>
+                                                    <input type="text" class="form-control calc-input" id = "average_accuracy1" value="" readonly>
+                                                </td>
+                                                <td>+/-</td>
+                                                <td>
+                                                    <input type="text" class="form-control calc-input" id = "average_accuracy2" value="" readonly>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Average AUC</td>
+                                                <td>
+                                                    <input type="text" class="form-control calc-input" id = "average_auc1" value="" readonly>
+                                                </td>
+                                                <td>+/-</td>
+                                                <td>
+                                                    <input type="text" class="form-control calc-input" id = "average_auc2" value="" readonly>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Average Macro Precision</td>
+                                                <td>
+                                                    <input type="text" class="form-control calc-input" id = "average_macro_precision1" value="" readonly>
+                                                </td>
+                                                <td>+/-</td>
+                                                <td>
+                                                    <input type="text" class="form-control calc-input" id = "average_macro_precision2" value="" readonly>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Average Macro Recall</td>
+                                                <td>
+                                                    <input type="text" class="form-control calc-input" id = "average_macro_Recall1" value="" readonly>
+                                                </td>
+                                                <td>+/-</td>
+                                                <td>
+                                                    <input type="text" class="form-control calc-input" id = "average_macro_Recall2" value="" readonly>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Average Macro F1</td>
+                                                <td>
+                                                    <input type="text" class="form-control calc-input" id = "average_macro_f11" value="" readonly>
+                                                </td>
+                                                <td>+/-</td>
+                                                <td>
+                                                    <input type="text" class="form-control calc-input" id = "average_macro_f12" value="" readonly>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 py-3 px-0 d-flex flex-nowrap">
+            <div class="w-100">
+                <div class="row m-0 peers ai-sb flex-column flex-nowrap">
+                    <div class="col-md-12 col-sm-12 pl-1 py-2">
+                        <h5 class="my-0">Unlabeled Data File</h5>
+                    </div>
+                    <div class="col-md-12 col-sm-12 pl-0 d-md-flex d-sm-flex flex-md-column flex-sm-column">
+                        <form action="{% url 'runDocumentClassifierSupervised' %}" method="post"
+                                              enctype="multipart/form-data">
+                            <div class="files-upload-section">
+                                <div class="mt-2 mb-3">
+                                    <label>Select Unlabeled Data File</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="testFile"
+                                               id="supervised-unlabeled-datafile" onchange="startReadUnlabeledFile()">
+                                        <label class="custom-file-label" id="supervisedunLabeled" for="supervised-unlabeled-datafile">Choose
+                                            file</label>
+                                        <p id="errorMessageFile" class="errorColor">! Please choose the file</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 py-3 d-flex justify-content-between pr-2 pl-1">
+            <div class="col-6 pl-0">
+                <button type="button" id="run-document-classifier" class="btn btn-primary" data-toggle="modal"
+                        >RUN DOCUMENT
+                    CLASSIFIER
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- input section end -->
+
+<!-- output section start -->
+<div class="row gap-20 my-3 shadow rounded">
+    <div class="col-md-12">
+        <div id="learning-output-heading"
+             class="col-md-12 col-sm-12 py-3 border-bottom d-flex ai-c jc-sb collapsed expansion-disabled">
+            <h5 class="mb-0 text-uppercase">Ouput and analysis</h5>
+            <span class="arrow">
+        <i class="ti-angle-down"></i>
+      </span>
+        </div>
+        <div id="learning-output-body" class="row m-0 w-100 hide">
+            <div class="col-md-12 col-sm-12 p-2 py-3 d-flex flex-nowrap">
+                <div class="row bd m-0">
+                    <div class="bgc-white col-md-12 col-sm-12 py-3 border-bottom">
+                        <h5 class="mb-0 text-uppercase">data statistics</h5>
+                    </div>
+                    <div class="col-md-12 bgc-white">
+                        <div class="row">
+                            <div class="col-md-12 p-2 w-100">
+                                <div class="bd bgc-white p-10  h-100">
+                                    <div class="w-100 mb-10 border-bottom">
+                                        <h5 class="text-uppercase">
+                                            Training data
+                                        </h5>
+                                    </div>
+                                    <div class="w-100 mt-3">
+                                        <div class="row m-0 peers ai-sb flex-column flex-nowrap">
+                                            <div class="col-md-12 pl-0">
+                                                <div class="form-group mb-2">
+                                                    <label for="output-training-data"># Training Examples</label>
+                                                    <input type="text" class="form-control" id="output-training-data" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 pl-0">
+                                                <div class="form-group">
+                                                    <label for="output-classes"># Classes</label>
+                                                    <input type="text" class="form-control" id="output-classes" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 px-0 training-table-area">
+                                                <table class="table table-responsive out-put-training-data-table" id="out-put-training-data-table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Class</th>
+                                                        <th>#Examples</th>
+                                                        <th>Class %</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 py-3 d-flex justify-content-between pr-2 pl-1">
+                <button type="button" id="buttonDownload2" class="btn btn-primary mr-2"><a id="download2"
+                                                                                           href="{% url 'makePredictionsForSupervisedLearning' %}">_Threshold_Analysis.xlsx</a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- output section end -->
+{% else %}
+<h1> Please login before using the page!</h1>
+<P>Click <a href="{% url 'login' %}">here</a> to login.</P>
+{% endif %}
+
+<!-- The Modal -->
+<div class="container py-5 modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row m-0 w-100">
+                    <div class="col-md-12 col-sm-12 px-2 py-3">
+                        <div class="bd bgc-white p-10">
+                            <button type="button" class="close" id="closeModal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            <div class="w-100 mb-10 border-bottom">
+                                <h5 class="text-uppercase">
+                                    progress
+                                </h5>
+                            </div>
+                            <div class="w-100">
+                                <div class="row peers ai-sb flex-column flex-nowrap m-0">
+                                    <div class="col-md-12 col-sm-12 d-md-flex d-sm-flex flex-md-column flex-sm-column p-0">
+                                        <div id="progress-display-section"
+                                             class="border mt-2 mb-3 pl-1 progress-display-section">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 d-md-flex d-sm-flex flex-md-column flex-sm-column p-0">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                 id="progress-bar" style="width:4%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container py-5 modal fade" id="endProcessError">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row m-0 w-100">
+                    <div class="col-md-12 col-sm-12 px-2 py-3">
+                        <div class="bd bgc-white p-10">
+                            <div class="w-100 mb-10 border-bottom">
+                                <h5>
+                                    Process Error
+                                </h5>
+                            </div>
+                            <div class="w-100">
+                                <div class="row peers ai-sb flex-column m-0" id="processError">
+                                    <h5>
+                                    </h5>
+                                    <div class="col-12 pr-1 d-flex justify-content-end">
+                                        <button type="button" id="process-ok" class="btn btn-primary mr-2">OK
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/existingModel.js' %}" type="text/javascript"></script>
+{% endblock %}

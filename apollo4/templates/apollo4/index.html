@@ -1,0 +1,295 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Apollo4!</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href="../../static/css/assets/static/images/logo.png">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
+    <script src="{% static 'js/index.js' %}" type="text/javascript"></script>
+</head>
+
+<body style="font-size: 14px;">
+<div class="app">
+
+
+    <div id='loader'>
+        <div class="spinner"></div>
+    </div>
+
+    <!-- @App Content -->
+    <!-- =================================================== -->
+    <div>
+        <!-- #Left Sidebar ==================== -->
+        <div class="sidebar">
+            <div class="sidebar-inner">
+                <!-- ### $Sidebar Header ### -->
+                <div class="sidebar-logo">
+                    <div class="peers ai-c fxw-nw">
+                        <div class="peer peer-greed">
+                            <a class="sidebar-link td-n" href="{% url 'home' %}">
+                                <div class="peers ai-c fxw-nw fixed-logo-text">
+                                    <div class="peer">
+                                        <div class="logo">
+                                            <img src="../../static/css/assets/static/images/logo.png" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="peer peer-greed">
+                                        <h5 class="lh-1 mB-0 logo-text">Apollo4</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="peer">
+                            <div class="mobile-toggle sidebar-toggle">
+                                <a href="" class="td-n">
+                                    <i class="ti-arrow-circle-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ### $Sidebar Menu ### -->
+                <ul class="sidebar-menu scrollable pos-r">
+                    <li class="nav-item">
+                        <a class='sidebar-link' href="{% url 'home'  %}">
+                          <span class="icon-holder">
+                            <i class="c-blue-500 ti-home"></i>
+                          </span>
+                            <span class="title">Home</span>
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="javascript:void(0);">
+                            <span class="icon-holder">
+                                <i class="c-orange-500 ti-layout-list-thumb"></i>
+                            </span>
+                            <span class="title">Train New Model</span>
+                            <span class="arrow">
+                                <i class="ti-angle-right"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class='sidebar-link' id="supervised" href="{% url 'svl'  %}">Supervised Learning</a>
+                            </li>
+                            <li>
+                                <a class='sidebar-link' href="{% url 'usvl'  %}">Unsupervised Learning</a>
+
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="javascript:void(0);">
+                            <span class="icon-holder">
+                                <i class="c-purple-500 ti-map"></i>
+                            </span>
+                            <span class="title">Use Existing Model</span>
+                            <span class="arrow">
+                                <i class="ti-angle-right"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class='sidebar-link' href="{% url 'em'  %}">supervised Model</a>
+                            </li>
+                            <li>
+                                <a class='sidebar-link' href="{% url 'emus'  %}">unsupervised model</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="javascript:void(0);">
+                            <span class="icon-holder">
+                                <i class="c-red-500 ti-files"></i>
+                            </span>
+                            <span class="title">Incremental learning</span>
+                            <span class="arrow">
+                                <i class="ti-angle-right"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class='sidebar-link' href="{% url 'il'  %}">supervised Learning</a>
+                            </li>
+                            <li>
+                                <a class='sidebar-link' href="{% url 'ilu'  %}">unsupervised Learning</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="javascript:void(0);">
+                            <span class="icon-holder">
+                                <i class="c-green-500 ti-agenda"></i>
+                            </span>
+                            <span class="title">Patent scoring</span>
+                            <span class="arrow">
+                                <i class="ti-angle-right"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class='sidebar-link' href="{% url 'ps'  %}">Search Similar Patents</a>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="javascript:void(0);">
+                            <span class="icon-holder">
+                                <i class="c-yellow-500 ti-write"></i>
+                            </span>
+                            <span class="title">Data Annotation</span>
+                            <span class="arrow">
+                                <i class="ti-angle-right"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class='sidebar-link' href="{% url 'da'  %}">annotate</a>
+                            </li>
+                        </ul>
+                    </li>
+<!--                    <li class="nav-item dropdown">-->
+<!--                        <a class="dropdown-toggle" href="javascript:void(0);">-->
+<!--                            <span class="icon-holder">-->
+<!--                                <i class="c-yellow-500 ti-write"></i>-->
+<!--                            </span>-->
+<!--                            <span class="title">Spotlight</span>-->
+<!--                            <span class="arrow">-->
+<!--                                <i class="ti-angle-right"></i>-->
+<!--                            </span>-->
+<!--                        </a>-->
+<!--                        <ul class="dropdown-menu">-->
+<!--                            <li>-->
+<!--                                <a class='sidebar-link' href="{% url 'sl'  %}">Tool</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+                </ul>
+            </div>
+        </div>
+
+        <!-- #Main ============================ -->
+        <div class="page-container">
+            <!-- ### $Topbar ### -->
+            <div class="navbar header">
+                <div class="header-container">
+                    <ul class="nav-left">
+                        <li>
+                            <a id='sidebar-toggle' class="sidebar-toggle" style="color:#f9fafb;"
+                               href="javascript:void(0);">
+                                <i class="ti-menu"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav-right">
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle no-after align-right fxw-nw ai-c lh-1 peers"
+                               data-toggle="dropdown">
+                                <div class="peer mR-10">
+                                    <span class="fsz-sm c-grey-900" id="userName"></span>
+                                </div>
+                                <div class="peer">
+                                    <i class="fa fa-user-circle" style="color:#f9fafb;" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu fsz-sm py-3 px-2">
+                                <a href="{% url 'logout'  %}" id="log-out" class="d-b td-n bgcH-grey-100 c-grey-700">
+                                    <i class="ti-power-off mR-10"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ### $App Screen Content ### -->
+            <main class='main-content bgc-grey-100'>
+                <div id='mainContent'>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="alert alert-primary alert-dismissible hide" id="switch-tab">
+                                Please make sure to download results and save the model before the running the current
+                                program.
+                                Otherwise the results will be lost and the model will not be saved.
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                            <div class="alert alert-success alert-dismissible hide" id="sucess-message">
+                                <strong>Success!</strong> Your model has been saved successfully.
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                            {% block content %}
+                            {% endblock %}
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- ### $App Screen Footer ### -->
+            <footer class="bdT ta-c p-15 lh-0 fsz-sm c-grey-600">
+                <span>Copyright.All rights reserved.</span>
+            </footer>
+        </div>
+    </div>
+    <div class="container py-5 modal fade" id="timeOut">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row m-0 w-100">
+                        <div class="col-md-12 col-sm-12 px-2 py-3">
+                            <div class="bd bgc-white p-10">
+                                <div class="w-100 mb-10 border-bottom">
+                                    <h5>
+                                        Time Expired!
+                                    </h5>
+                                </div>
+                                <div class="w-100">
+                                    <div class="row peers ai-sb flex-column m-0">
+                                        <h5>
+                                            Please login again
+                                        </h5>
+                                        <div class="col-12 pr-1 d-flex justify-content-end">
+                                            <a href="{% url 'logout'  %}" id="expired-log-out">
+                                                <button type="button" id="save-error-ok" class="btn btn-primary mr-2">OK
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>

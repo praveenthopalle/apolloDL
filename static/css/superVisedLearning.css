@@ -1,0 +1,181 @@
+
+.shadow {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.custom-control-label::before,
+.custom-file-label,
+.custom-select {
+  transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.custom-control-label::before {
+  background-color: #fff;
+  border: #adb5bd solid 1px;
+}
+
+.files-upload-section {
+    padding-left: 5px;
+}
+.pleft-30 {
+  padding-left: 30px;
+}
+
+#auto-model-note {
+  height: 60px;
+}
+
+.errorColor{
+    color: red;
+}
+
+.modal.fade.show {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+.modal-dialog {
+  width: 100%;
+  max-width: 80%;
+}
+
+.progress {
+  min-height: 30px;
+  margin-bottom: 0px;
+}
+#download2{
+    color:#fff;
+}
+#download3{
+    color:#fff;
+}
+#download1{
+    color:#fff;
+}
+
+.learning-model-section label {
+  white-space: nowrap;
+}
+
+.justify-content-end{
+    height:fit-content
+}
+
+.section-1 {
+    margin-right: -8px !important;
+    margin-left: -8px !important;
+}
+
+.table {
+  margin-bottom: 0px;
+}
+
+.table thead th {
+  border-top: none;
+  background-color: #e9ecef !important;
+}
+
+.training-table-area {
+  max-height: 300px;
+  overflow: auto;
+  border: 1px solid #dee2e6;
+}
+
+.testing-table-area {
+  max-height: 300px;
+  overflow: auto;
+  border: 1px solid #dee2e6;
+  margin-top: 80px;
+}
+
+.topics-table-area {
+    max-height: 350px;
+    overflow: auto;
+    border: 1px solid #dee2e6;
+}
+
+table.table-responsive {
+  display: table;
+  /* required for table-layout to be used (not normally necessary; included for completeness) */
+  table-layout: fixed;
+  /* this keeps your columns with fixed with exactly the right width */
+  width: 100%;
+  /* table must have width set for fixed layout to work as expected */
+  height: 100%;
+}
+
+tbody {
+  height: 300px;
+  overflow-y: scroll;
+  display: table-row-group;
+}
+
+th {
+  position: sticky;
+  top: -1px;
+}
+
+.hide {
+  display: none;
+  -webkit-transition: all .2s ease-in;
+  -o-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+}
+
+.progress-display-section {
+  min-height: 350px;
+  max-height: 350px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.collapsed {
+  border-bottom: none !important;
+}
+
+.collapsed .arrow {
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg)
+}
+
+#learning-input-heading,
+#learning-output-heading {
+  cursor: pointer;
+}
+
+.expansion-disabled {
+  pointer-events: none;
+}
+
+.custom-file-input:disabled~.custom-file-label {
+  background-color: #eff0f1;
+  opacity: 0.5;
+}
+
+.custom-file-input:disabled~.custom-file-label::after {
+  background: #e9ecef;
+  color: #495057;
+}
+
+.btn-primary {
+    background-color: #33495e;
+    border-color: #33495e;
+}
+
+.btn-primary: disabled {
+    background-color: #33495e !important;
+    border-color: #33495e !important;
+}
+
+#progress-bar {
+    background-color: #33495e !important;
+    border-color: #33495e !important;
+}
+
+.custom-select#displayResults {
+    width: 0% !important;
+}
+#spotlight-search{
+    width: 12% !important;
+}

@@ -1,0 +1,256 @@
+{%  extends "apollo4/index.html" %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/superVisedLearning.css' %}">
+
+{% if user.is_authenticated %}
+<!-- input section start -->
+<div class="row gap-20 mb-3 shadow rounded">
+    <div class="col-md-12">
+        <div id="learning-input-heading" class="col-md-12 col-sm-12 py-3 border-bottom d-flex ai-c jc-sb">
+            <h5 class="mb-0 text-uppercase">Input and analysis</h5>
+            <span class="arrow">
+        <i class="ti-angle-down"></i>
+      </span>
+        </div>
+    </div>
+    <div id="learning-input-body" class="row m-0 w-100">
+        <div class="col-md-12 col-sm-12 p-2 py-3 d-flex flex-nowrap">
+            <div class="row bd m-0">
+                <div class="bgc-white col-md-12 col-sm-12 py-3 border-bottom">
+                    <h5 class="mb-0 text-uppercase">Available Projects and Models</h5>
+                </div>
+                <div class="col-md-12">
+                    <div class="row my-2 bd bgc-white section-1">
+                        <div class="col-md-12 pl-1">
+                            <div class="files-upload-section">
+                                <div class=" mt-2 mb-3">
+                                    <label>Select an Existing Project:</label>
+                                    <select id="existingProjects" class="custom-select">
+                                        <option value="" selected>Choose...</option>
+                                    </select>
+                                     <p id="errorMessageProjectOption" class="errorColor">! Please select project Name</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pl-1">
+                            <div class="files-upload-section">
+                        <div class=" mt-2 mb-3">
+                            <label>Selected Project's description:</label>
+                            <textarea id="project-description" name="additional-words" class="form-control" rows="5"
+                                      style="resize: none;" readonly></textarea>
+                        </div>
+                    </div>
+                        </div>
+                        <div class="col-md-12 pl-1">
+                            <div class="files-upload-section">
+                        <div class=" mt-2 mb-3">
+                            <label>Existing Model(s) for selected Project:</label>
+                            <select id="existingModels" class="custom-select">
+                                <option value="" selected>Choose...</option>
+                            </select>
+                             <p id="errorMessageModelOption" class="errorColor">! Please select model</p>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                    <div class="bd bgc-white p-10 h-100 section-1">
+                        <div class="w-100 mb-10 border-bottom">
+                            <h5 class="text-uppercase">
+                                topic modelling results
+                            </h5>
+                        </div>
+                    <div class="w-100 mt-3">
+                        <div class="row m-0 peers ai-sb flex-column flex-nowrap learning-model-section">
+                            <div class="col-md-12 px-0 topics-table-area">
+                                <table id="topics-data-table" class="table table-responsive topics-data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#Examples</th>
+                                            <th>Class</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 py-3 px-0 d-flex flex-nowrap">
+            <div class="w-100">
+                <div class="row m-0 peers ai-sb flex-column flex-nowrap">
+                    <div class="col-md-12 col-sm-12 pl-1 py-2">
+                        <h5 class="my-0">Unlabeled Data File</h5>
+                    </div>
+                    <div class="col-md-12 col-sm-12 pl-0 d-md-flex d-sm-flex flex-md-column flex-sm-column">
+                        <form action="{% url 'runDocumentClassifierSupervised' %}" method="post"
+                                                                    enctype="multipart/form-data">
+                            <div class="files-upload-section">
+                                <div class="mt-2 mb-3">
+                                    <label>Select Unlabeled Data File</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="testFile"
+                                               id="unsupervised-datafile" onchange="startReadUnlabeledFile()">
+                                        <label class="custom-file-label" id="unsupervisedLabeled" for="unsupervised-datafile">Choose
+                                            file</label>
+                                        <p id="errorMessageFile" class="errorColor">! Please choose the
+                                                            file</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 py-3 d-flex justify-content-between pr-2 pl-1">
+            <div class="col-6 pl-0">
+                <button type="button" id="run-document-classifier" class="btn btn-primary" data-toggle="modal"
+                        >RUN DOCUMENT
+                    CLASSIFIER
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- input section end -->
+
+<!-- output section start -->
+<div class="row gap-20 my-3 shadow rounded">
+    <div class="col-md-12">
+        <div id="learning-output-heading"
+             class="col-md-12 col-sm-12 py-3 border-bottom d-flex ai-c jc-sb collapsed expansion-disabled">
+            <h5 class="mb-0 text-uppercase">Ouput and analysis</h5>
+            <span class="arrow">
+        <i class="ti-angle-down"></i>
+      </span>
+        </div>
+        <div id="learning-output-body" class="row m-0 w-100 hide">
+            <div class="col-md-12 col-sm-12 p-2 py-3 d-flex flex-nowrap">
+                <div class="row bd m-0">
+                    <div class="bgc-white col-md-12 col-sm-12 py-3 border-bottom">
+                        <h5 class="mb-0 text-uppercase">data statistics</h5>
+                    </div>
+                    <div class="col-md-12 bgc-white">
+                        <div class="row">
+                            <div class="col-md-12 p-2 w-100">
+                                <div class="bd bgc-white p-10  h-100">
+                                    <div class="w-100 mb-10 border-bottom">
+                                        <h5 class="text-uppercase">
+                                            Topic Modeling Output Results
+                                        </h5>
+                                    </div>
+                                    <div class="w-100 mt-3">
+                                        <div class="row m-0 peers ai-sb flex-column flex-nowrap">
+                                            <div class="col-md-12 px-0 training-table-area">
+                                                <table class="table table-responsive training-data-table" id="topics-data-output-table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#Examples</th>
+                                                        <th>Topics</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 col-sm-12 py-3 d-flex justify-content-between pr-2 pl-1">
+
+    <button type="button" id="buttonDownload1" class="btn btn-primary"><a id="download1"
+                                                                          href="{% url 'makePredictionsForUnsupervisedLearning' %}">_Prediction_Results.txt</a>
+    </button>
+</div>
+<!-- output section end -->
+{% else %}
+<h1> Please login before using the page!</h1>
+<P>Click <a href="{% url 'login' %}">here</a> to login.</P>
+{% endif %}
+
+<!-- The Modal -->
+<div class="container py-5 modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row m-0 w-100">
+                    <div class="col-md-12 col-sm-12 px-2 py-3">
+                        <div class="bd bgc-white p-10">
+                            <button type="button" class="close" id="closeModal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            <div class="w-100 mb-10 border-bottom">
+                                <h5 class="text-uppercase">
+                                    progress
+                                </h5>
+                            </div>
+                            <div class="w-100">
+                                <div class="row peers ai-sb flex-column flex-nowrap m-0">
+                                    <div class="col-md-12 col-sm-12 d-md-flex d-sm-flex flex-md-column flex-sm-column p-0">
+                                        <div id="progress-display-section"
+                                             class="border mt-2 mb-3 pl-1 progress-display-section">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 d-md-flex d-sm-flex flex-md-column flex-sm-column p-0">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                 id="progress-bar" style="width:4%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container py-5 modal fade" id="endProcessError">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row m-0 w-100">
+                    <div class="col-md-12 col-sm-12 px-2 py-3">
+                        <div class="bd bgc-white p-10">
+                            <div class="w-100 mb-10 border-bottom">
+                                <h5>
+                                    Process Error
+                                </h5>
+                            </div>
+                            <div class="w-100">
+                                <div class="row peers ai-sb flex-column m-0" id="processError">
+                                    <h5>
+                                    </h5>
+                                    <div class="col-12 pr-1 d-flex justify-content-end">
+                                        <button type="button" id="process-ok" class="btn btn-primary mr-2">OK
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/existingModelUnsupervised.js' %}" type="text/javascript"></script>
+{% endblock %}

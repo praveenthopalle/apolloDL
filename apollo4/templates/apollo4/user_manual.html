@@ -1,0 +1,126 @@
+{%  extends "apollo4/index.html" %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/user_manual.css' %}">
+
+<!-- input section start -->
+<!-- Slideshow container -->
+<div class="row gap-20 mb-3 shadow rounded">
+    <div class="col-12">
+        <div id="learning-input-heading" class="col-md-12 col-sm-12 py-3 border-bottom d-flex ai-c jc-sb">
+            <h4 class="mb-0">User Manual</h4>
+            <span class="arrow">
+        <i class="ti-angle-down"></i>
+      </span>
+        </div>
+        <div class="col-md-12 col-sm-12 px-2 py-3">
+            <div class="bd bgc-white p-10">
+                <div class="row peers ai-sb flex-column flex-nowrap">
+                    <div class="col-md-12 col-sm-12 d-md-flex d-sm-flex flex-md-column flex-sm-column py-2">
+                        <div class="mt-2 mb-3 pl-4">
+                            <p style="text-align: justify;font-size: 25px"><b>A</b>I <b>P</b>rogram for <b>O</b>verviewing
+                                <b>L</b>egal <b>L</b>iterature <b>O</b>nline.</p>
+
+                            <p style="font-size: 16px">For a detailed description of each of the programs within
+                                APOLLO,
+                                Please download this <a href="../../static/apolloFile/APOLLO_4_User_Manual.docx">Document</a></p><br>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slideshow-container">
+
+                    <!-- Full-width images with number and caption text -->
+                    <div class="mySlides ">
+                        <div class="numbertext">1 / 6</div>
+                        <div class="text">Supervised Learning</div>
+                        <img src="../../static/apolloFile/supervised.PNG" style="width:100%">
+                    </div>
+
+                    <div class="mySlides">
+                        <div class="numbertext">2 / 6</div>
+                        <div class="text">Unsupervised Learning</div>
+                        <img src="../../static/apolloFile/unsupervised.PNG" style="width:100%">
+                    </div>
+
+                    <div class="mySlides">
+                        <div class="numbertext">3 / 6</div>
+                        <div class="text">Train New Model</div>
+                        <img src="../../static/apolloFile/trainNew.PNG" style="width:100%">
+
+                    </div>
+
+                    <div class="mySlides">
+                        <div class="numbertext">4 / 6</div>
+                        <div class="text">Use Exisiting Model</div>
+                        <img src="../../static/apolloFile/useExisting.PNG" style="width:100%">
+                    </div>
+
+                    <div class="mySlides">
+                        <div class="numbertext">5 / 6</div>
+                        <div class="text">Incremental Model</div>
+                        <img src="../../static/apolloFile/incremental.PNG" style="width:100%">
+                    </div>
+
+                    <div class="mySlides">
+                        <div class="numbertext">6 / 6</div>
+                        <div class="text">Patent scoring</div>
+                        <img src="../../static/apolloFile/patentScoring.PNG" style="width:100%">
+
+                    </div>
+
+                    <!-- Next and previous buttons -->
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+                <br>
+
+                <!-- The dots/circles -->
+                <div style="text-align:center">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                    <span class="dot" onclick="currentSlide(6)"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- input section end -->
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+
+</script>
+<script src="{% static 'js/superVised.js' %}" type="text/javascript"></script>
+{% endblock %}
